@@ -1,0 +1,17 @@
+FROM node:20-bullseye-slim
+
+ARG project_dir=/opt/app
+WORKDIR $project_dir
+
+RUN set -eux \
+  # tzdata for timzone
+  && apt-get update \
+  && apt-get install -y tzdata \
+  # && npm install -g npm@9.6.5 \
+  ## 必要なtypescriptの型定義をdevDependencies側に入れてくれる
+  && yarn global add typesync \
+  ## NestJS
+  && yarn global add @nestjs/cli
+
+# timezone env with default
+ENV TZ=Asia/Tokyo

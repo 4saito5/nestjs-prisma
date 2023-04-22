@@ -1,0 +1,36 @@
+# Docker環境 for ローカルPC
+version: '3.8'
+
+services:
+
+  api:
+    container_name: api
+    image: api
+    build:
+      # コンテキストをリポジトリのルートディレクトリに指定
+      context: ../../
+      dockerfile: ./infra/docker/nestjs/Dockerfile.local
+    # command: sh -c 'npm run start:dev'
+    # environment:
+    #     - TZ=Asia/Tokyo
+    env_file:
+      - '../env/node-local.env'
+    volumes:
+      - ../../src/api:/opt/app
+    ports:
+      - 8000:3000
+    depends_on:
+      - db
+    tty: true
+
+  # ローカルDB
+  db:
+    container_name: db
+    image: postgres:latest
+    env_file:
+      - ../env/db-local.env
+    volumes:
+      # Data out of Docker
+      - ../../.tmp/pg_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
