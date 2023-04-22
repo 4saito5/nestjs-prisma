@@ -82,6 +82,10 @@ npx prisma studio
 ```
 
 
+## クエリの書き方
+[Raw database access](https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access)
+
+
 
 ```sh
 ```
